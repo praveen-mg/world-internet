@@ -1,0 +1,1 @@
+internet_world <- read.csv('output_file.csv',header = TRUE)
