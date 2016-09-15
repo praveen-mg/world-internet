@@ -104,9 +104,9 @@ for val in table.columns:
 
 table.to_csv('data_cleaned.csv')
 print "\nCSV File Created"
-
+#
 #scrap_table_to_csv \
-#    ('http://www.internetlivestats.com/internet-users/', \
+#    ('http://www.internetlivestats.com/internet-users/india/', \
 #    "india_file.csv","table",True)
 table_india = pandas.read_csv("india_file.csv")
 for val in table_india.columns:
@@ -119,21 +119,22 @@ table_india['Penetration (% of Pop) '] = remove_percent(table_india,  \
                                                       
 table_india['1Y User  Change (%)'] = remove_percent(table_india, \
                                         '1Y User  Change (%)')  
-table_india['World Pop. Change']    = remove_percent(table_india,
-                                'World Pop. Change')                                     
+table_india['Population  Change']    = remove_percent(table_india,
+                                'Population  Change')                                     
                                         
 table_india['Internet Users**']  =  remove_comma(table_india,    \
                                           'Internet Users**')                                 
-table_india['1Y User Change'] = remove_comma(table_india, \
-                                            '1Y User Change')                                                                             
+table_india['1Y User Change '] = remove_comma(table_india, \
+                                            '1Y User Change ')                                                                             
 
 table_india['Non-Users (Internetless) '] = remove_comma(table_india, \
                                     'Non-Users (Internetless) ')
-table_india['World Population'] = remove_comma(table_india, \
-                                    'World Population')                                
+table_india['Total Population'] = remove_comma(table_india, \
+                                    'Total Population')                                
 print table_india['Year '].max()
 for val in table_india.columns:
     print ("Col Name is %s has data type %s"% (val,table_india[val].dtype))
 table_india.to_csv('india_data_cleaned.csv')
 print "\nCSV File Created"
+
 #cat output_file.csv

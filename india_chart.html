@@ -39,16 +39,32 @@
       */
 		  //var svg = dimple.newSvg("#chartContainer", 590, 400);
           var myChart = new dimple.chart(svg, data);
-          myChart.addMeasureAxis("y", "Penetration (% of Pop)"); 
-          myChart.addMeasureAxis("x", "Users 1 Year  Change (%) ");
+          
+		  var penetration = myChart.addMeasureAxis("y", "Penetration (% of Pop) ");
+		  var yearChange = myChart.addMeasureAxis(penetration, "1Y User  Change (%)");
+          var x = myChart.addTimeAxis("x", "Year ");
 		  //var x = myChart.addCategoryAxis("x", "Country"); 
-		  myChart.addMeasureAxis("z", "Population (2016)");
+		  //myChart.addMeasureAxis("z", "Population (2016)");
 		  //x.dateParseFormat = "%Y";
           //myChart.addSeries(null, dimple.plot.bar);
-		  myChart.addSeries("Country", dimple.plot.bubble);
-		  //myChart.addSeries(null, dimple.plot.scatter);
-		  //myChart.addSeries(null, dimple.plot.line);
+		  //myChart.addSeries("Country", dimple.plot.bubble);
+		  x.dateParseFormat =  "%Y"
+		  x.tickFormat = "%Y"
+		  x.timeInterval = 1
+		  myChart.addSeries("User Change 1 Year", dimple.plot.scatter,[x,yearChange]);
+		  myChart.addSeries("% penetration", dimple.plot.scatter,[x,penetration]);
+		  myChart.addSeries("User Change 1 Year", dimple.plot.line,[x,yearChange]);
+		  myChart.addSeries("% penetration", dimple.plot.line,[x,penetration]);
           myChart.draw();
+		  /*var myChart2 = new dimple.chart(svg, data);
+		  myChart2.addMeasureAxis("y", "1Y User  Change (%)"); 
+          var x2 = myChart.addTimeAxis("x", "Year ");
+		  x2.dateParseFormat =  "%Y"
+		  x2.tickFormat = "%Y"
+		  x2.timeInterval = 1
+		  myChart2.addSeries(null, dimple.plot.scatter);
+		  myChart2.addSeries(null, dimple.plot.line);
+          myChart2.draw();*/
         };
       </script>
   </head>
@@ -58,7 +74,7 @@
     Use D3 (not dimple.js) to load the TSV file
     and pass the contents of it to the draw function
     */
-  d3.csv("data_cleaned.csv", draw);
+  d3.csv("india_data_cleaned.csv", draw);
   </script>
 </body>
 </html>
