@@ -136,5 +136,20 @@ for val in table_india.columns:
     print ("Col Name is %s has data type %s"% (val,table_india[val].dtype))
 table_india.to_csv('india_data_cleaned.csv')
 print "\nCSV File Created"
-
+#scrap_table_to_csv \
+#    ( 'http://statisticstimes.com/economy/countries-by-projected-gdp-capita-ppp.php', \
+#    "gdp_file.csv","table_id",False)
+gdp_world = pandas.read_csv("gdp_file.csv")
+gdp_world['gdp_percapita'] = remove_comma(gdp_world, \
+                                    '2015')
+table['Continent'] = ""
+table['gdp_percapita'] = ""
+for val in table['Country']:
+    if(any(gdp_world.Country == val)):
+        table[table.Country == val].Continent = gdp_world[gdp_world.Country == val].Continent
+        table[table.Country == val].gdp_percapita = gdp_world[gdp_world.Country == val].gdp_percapita
+    else:
+        print val
+#print table['Continent']     
+table.to_csv('gdp_internet.csv')
 #cat output_file.csv
