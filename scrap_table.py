@@ -142,14 +142,17 @@ print "\nCSV File Created"
 gdp_world = pandas.read_csv("gdp_file.csv")
 gdp_world['gdp_percapita'] = remove_comma(gdp_world, \
                                     '2015')
-table['Continent'] = ""
-table['gdp_percapita'] = ""
+table['Continent'] = " "
+table['gdp_percapita'] = " "
 for val in table['Country']:
     if(any(gdp_world.Country == val)):
-        table[table.Country == val].Continent = gdp_world[gdp_world.Country == val].Continent
-        table[table.Country == val].gdp_percapita = gdp_world[gdp_world.Country == val].gdp_percapita
+        Continent = gdp_world[gdp_world.Country == val].Continent
+        table.loc[table.Country == val,'Continent'] = Continent.item()
+        
+        gdp = gdp_world[gdp_world.Country == val].gdp_percapita
+        table.loc[table.Country == val,'gdp_percapita'] = gdp.item()
     else:
         print val
-#print table['Continent']     
+print table['Continent']     
 table.to_csv('gdp_internet.csv')
 #cat output_file.csv
