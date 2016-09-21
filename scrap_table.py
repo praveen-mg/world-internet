@@ -132,8 +132,8 @@ table_india['Non-Users (Internetless) '] = remove_comma(table_india, \
 table_india['Total Population'] = remove_comma(table_india, \
                                     'Total Population')                                
 print table_india['Year '].max()
-for val in table_india.columns:
-    print ("Col Name is %s has data type %s"% (val,table_india[val].dtype))
+#for val in table_india.columns:
+#    print ("Col Name is %s has data type %s"% (val,table_india[val].dtype))
 table_india.to_csv('india_data_cleaned.csv')
 print "\nCSV File Created"
 #scrap_table_to_csv \
@@ -143,16 +143,21 @@ gdp_world = pandas.read_csv("gdp_file.csv")
 gdp_world['gdp_percapita'] = remove_comma(gdp_world, \
                                     '2015')
 table['Continent'] = " "
-table['gdp_percapita'] = " "
+table['gdp_percapita'] = np.NaN
 for val in table['Country']:
     if(any(gdp_world.Country == val)):
         Continent = gdp_world[gdp_world.Country == val].Continent
         table.loc[table.Country == val,'Continent'] = Continent.item()
         
         gdp = gdp_world[gdp_world.Country == val].gdp_percapita
-        table.loc[table.Country == val,'gdp_percapita'] = gdp.item()
+        table.loc[table.Country == val,'gdp_percapita'] = int(gdp.item())
     else:
         print val
-print table['Continent']     
+#table['gdp_percapita'] = table['gdp_percapita'].astype(long)
+for val in table.columns:
+    print ("Col Name is %s has data type %s"% (val,table[val].dtype))
+#print table['Continent']     
+table = table[np.isfinite(table['gdp_percapita'])]
+
 table.to_csv('gdp_internet.csv')
 #cat output_file.csv
