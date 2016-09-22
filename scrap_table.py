@@ -139,11 +139,13 @@ print "\nCSV File Created"
 #scrap_table_to_csv \
 #    ( 'http://statisticstimes.com/economy/countries-by-projected-gdp-capita-ppp.php', \
 #    "gdp_file.csv","table_id",False)
-gdp_world = pandas.read_csv("gdp_file.csv")
+gdp_world = pandas.read_csv("gdp_file_cleaned.csv")
 gdp_world['gdp_percapita'] = remove_comma(gdp_world, \
                                     '2015')
 table['Continent'] = " "
 table['gdp_percapita'] = np.NaN
+table.sort('Internet Users  (2016)',ascending = False)
+table = table.head(n=100)
 for val in table['Country']:
     if(any(gdp_world.Country == val)):
         Continent = gdp_world[gdp_world.Country == val].Continent
@@ -158,6 +160,7 @@ for val in table.columns:
     print ("Col Name is %s has data type %s"% (val,table[val].dtype))
 #print table['Continent']     
 table = table[np.isfinite(table['gdp_percapita'])]
+
 
 table.to_csv('gdp_internet.csv')
 #cat output_file.csv
